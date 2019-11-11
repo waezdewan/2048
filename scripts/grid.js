@@ -45,11 +45,6 @@ Grid.prototype.availablePositions = function() {
     return positions;
 }
 
-// return 2 or 4 randomly // move to controller
-Grid.prototype.randomCellValue = function() {
-    return Math.floor(Math.random() * 2 + 1) * 2;
-}
-
 // forces return of true or false
 Grid.prototype.cellsAvailable = function() {
     return !!this.availablePositions().length;
@@ -58,4 +53,8 @@ Grid.prototype.cellsAvailable = function() {
 // insert tile into cell
 Grid.prototype.insertTile = function(tile) {
     this.cells[tile.y][tile.x] = tile;
+}
+
+Grid.prototype.cellEmpty = function(location) {
+    return !this.cells[location.y][location.x]
 }
