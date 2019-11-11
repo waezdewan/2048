@@ -15,7 +15,7 @@ GameController.prototype.addStartTiles = function() {
 }
 
 GameController.prototype.addRandomTile = function() {
-    if (this.grid.cellsAvailable) {
+    if (this.grid.isCellAvailable) {
         let tile = new Tile(this.grid.randomAvailablePositions(), this.randomTileValue());
         this.grid.insertTile(tile);
     }
@@ -37,7 +37,7 @@ GameController.prototype.moveUp = function() {
                 if (targetLocation.y < 0) break;
 
                 // keep moving until blocked
-                if (this.grid.cellEmpty(targetLocation)) {
+                if (this.grid.isCellEmpty(targetLocation)) {
                     this.moveTile(tile, targetLocation);
                     tilesMoved = true;
                 } else { // try to merge
@@ -65,7 +65,7 @@ GameController.prototype.moveLeft = function() {
                 if (targetLocation.x < 0) break;
 
                 // keep moving until blocked
-                if (this.grid.cellEmpty(targetLocation)) {
+                if (this.grid.isCellEmpty(targetLocation)) {
                     this.moveTile(tile, targetLocation);
                     tilesMoved = true;
                 } else { // try to merge
@@ -93,7 +93,7 @@ GameController.prototype.moveRight = function() {
                 if (targetLocation.x == this.grid.size) break;
 
                 // keep moving until blocked
-                if (this.grid.cellEmpty(targetLocation)) {
+                if (this.grid.isCellEmpty(targetLocation)) {
                     this.moveTile(tile, targetLocation);
                     tilesMoved = true;
                 } else { // try to merge
@@ -121,7 +121,7 @@ GameController.prototype.moveDown = function() {
                 if (targetLocation.y == this.grid.size) break;
 
                 // keep moving until blocked
-                if (this.grid.cellEmpty(targetLocation)) {
+                if (this.grid.isCellEmpty(targetLocation)) {
                     this.moveTile(tile, targetLocation);
                     tilesMoved = true;
                 } else { // try to merge

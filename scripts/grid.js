@@ -46,7 +46,7 @@ Grid.prototype.availablePositions = function() {
 }
 
 // forces return of true or false
-Grid.prototype.cellsAvailable = function() {
+Grid.prototype.isCellAvailable = function() {
     return !!this.availablePositions().length;
 }
 
@@ -55,6 +55,6 @@ Grid.prototype.insertTile = function(tile) {
     this.cells[tile.y][tile.x] = tile;
 }
 
-Grid.prototype.cellEmpty = function(location) {
+Grid.prototype.isCellEmpty = function(location) {
     return !this.cells[location.y][location.x]
 }
