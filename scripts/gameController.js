@@ -2,6 +2,7 @@ function GameController() {
     this.grid = new Grid(4);
     this.numStartTiles = 2;
     this.winningTile = 2048;
+    this.gameScore = 0;
     this.setup();
 }
 
@@ -151,6 +152,7 @@ GameController.prototype.mergedTile = function(tile, location) {
         targetTile.value *= 2;
         targetTile.merged = true;
         this.grid.cells[tile.y][tile.x] = null;
+        this.updateScore(targetTile.value);
         return true;
     }
     return false;
@@ -242,7 +244,9 @@ GameController.prototype.isMatchingNeighbour = function(tile) {
     return false;
 }
 
-// score 
+GameController.prototype.updateScore = function(value) {
+    this.gameScore += value;
+} 
 
 GameController.prototype.print = function() {
     output = "";
