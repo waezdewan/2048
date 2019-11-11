@@ -1,6 +1,7 @@
 function GameController() {
     this.grid = new Grid(4);
     this.numStartTiles = 2;
+    this.winningTile = 2048;
     this.setup();
 }
 
@@ -170,8 +171,75 @@ GameController.prototype.checkGrid = function(tilesMoved) {
         this.unsetMergeStatus();
 
         // add new random tile
-        this.addRandomTile(); 
+        this.addRandomTile();
+
+        // check if game is finished
+        this.checkGameFinished();
     }
+}
+
+GameController.prototype.checkGameFinished = function() {
+    let tileCount = 0;
+    for (let y = 0; y < this.grid.size; y++) {
+        for (let x = 0; x < this.grid.size; x++) {
+            let tile = this.grid.cells[y][x];
+            if (tile) {
+                tileCount++;
+                if (this.isWinningTile(tile)) {
+                    alert('Game won!')
+                }
+                if (this.isMatchingNeighbour(tile)) {
+                    return;
+                }
+            }
+        }
+    }
+
+    if (tileCount === (this.grid.size ** 2)) {
+        alert('Game over!')
+    }
+}
+
+GameController.prototype.isWinningTile = function(tile) {
+    if (tile.value === this.winningTile ) return true;
+    return false;
+}
+
+GameController.prototype.isMatchingNeighbour = function(tile) {
+    // left
+    if (tile.x - 1 >= 0) {
+        if (this.grid.cells[tile.y][tile.x - 1]) {
+            if (this.grid.cells[tile.y][tile.x - 1].value === tile.value) {
+                return true;
+            }
+        }
+    }
+    // right
+    if (tile.x + 1 < this.grid.size) {
+        if (this.grid.cells[tile.y][tile.x + 1]) {
+            if (this.grid.cells[tile.y][tile.x + 1].value === tile.value) {
+                return true;
+            }
+        }
+    }
+    // up
+    if (tile.y - 1 >= 0) {
+        if (this.grid.cells[tile.y - 1][tile.x]) {
+            if (this.grid.cells[tile.y - 1][tile.x].value === tile.value) {
+                return true;
+            }
+        }
+    }
+    // down
+    if (tile.y + 1 < this.grid.size) {
+        if (this.grid.cells[tile.y + 1][tile.x]) {
+            if (this.grid.cells[tile.y + 1][tile.x].value === tile.value) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 // score 
