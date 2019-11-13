@@ -1,13 +1,29 @@
-function GameController() {
+function GameController(HtmlModifier, InputController) {
     this.grid = new Grid(4);
     this.numStartTiles = 2;
     this.winningTile = 2048;
     this.gameScore = 0;
+
+    this.htmlModifier = new HtmlModifier();
+    this.inputController = new InputController(this);
+
     this.setup();
+}
+
+GameController.prototype.newGame = function () {
+    this.grid.cells = this.grid.emptyGrid();
+    this.resetScore();
+    this.htmlModifier.updateScore(this.gameScore);
+    this.setup();
+}
+
+GameController.prototype.resetScore = function () {
+    this.gameScore = 0;
 }
 
 GameController.prototype.setup = function() {
     this.addStartTiles();
+    this.htmlModifier.modify(this.grid);
 }
 
 GameController.prototype.addStartTiles = function() {
@@ -52,7 +68,7 @@ GameController.prototype.moveUp = function() {
         }
     }
 
-    this.checkGrid(tilesMoved); 
+    this.checkGrid(tilesMoved);
 }
 
 GameController.prototype.moveLeft = function() {
@@ -80,7 +96,7 @@ GameController.prototype.moveLeft = function() {
         }
     }
 
-    this.checkGrid(tilesMoved); 
+    this.checkGrid(tilesMoved);
 }
 
 GameController.prototype.moveRight = function() {
@@ -108,7 +124,7 @@ GameController.prototype.moveRight = function() {
         }
     }
 
-    this.checkGrid(tilesMoved); 
+    this.checkGrid(tilesMoved);
 }
 
 GameController.prototype.moveDown = function() {
@@ -136,12 +152,13 @@ GameController.prototype.moveDown = function() {
         }
     }
 
-    this.checkGrid(tilesMoved); 
+    this.checkGrid(tilesMoved);
 }
 
 GameController.prototype.moveTile = function(tile, location) {
     this.grid.cells[location.y][location.x] = tile;
     this.grid.cells[tile.y][tile.x] = null;
+    tile.savePosition(tile.serialize().position);
     tile.updatePosition(location);
 }
 
@@ -153,8 +170,10 @@ GameController.prototype.mergedTile = function(tile, location) {
         targetTile.merged = true;
         this.grid.cells[tile.y][tile.x] = null;
         this.updateScore(targetTile.value);
+        this.htmlModifier.updateScore(this.gameScore);
         return true;
     }
+    tile.savePosition(tile.serialize().position);
     return false;
 }
 
@@ -162,21 +181,34 @@ GameController.prototype.unsetMergeStatus = function() {
     for (let y = 0; y < this.grid.size; y++) {
         for (let x = 0; x < this.grid.size; x++) {
             let tile = this.grid.cells[y][x];
-            if (tile) tile.merged = false;
+            if (tile) {
+                tile.merged = false;
+            }
         }
     }
 }
 
 GameController.prototype.checkGrid = function(tilesMoved) {
     if (tilesMoved) {
-        // unset merged status of tiles
-        this.unsetMergeStatus();
-
-        // add new random tile
+        this.edgeCheckPreviousPosition();
         this.addRandomTile();
-
-        // check if game is finished
+        this.htmlModifier.modify(this.grid);
         this.checkGameFinished();
+        this.unsetMergeStatus();
+    }
+}
+
+// make sure edge tiles's previous position are updated
+GameController.prototype.edgeCheckPreviousPosition = function () {
+    for (let y = 0; y < this.grid.size; y++) {
+        for (let x = 0; x < this.grid.size; x++) {
+            if (y === 0 || x === 0 || y === this.grid.size -1 || x === this.grid.size -1) {
+                let tile = this.grid.cells[y][x];
+                if (tile && !tile.previousPosition) {
+                    tile.savePosition(tile.serialize().position);
+                }
+            }
+        }
     }
 }
 
