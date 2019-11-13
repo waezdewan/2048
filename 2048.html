@@ -8,39 +8,50 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
-        let gc = null;
-        document.addEventListener('keydown', function(event) {
-            if (event.keyCode == 37) {
-                gc.moveLeft();
-                console.log(gc.print());
-                console.log(gc.gameScore);
-                // alert('Left was pressed');
-            }
-            else if (event.keyCode == 38) {
-                gc.moveUp();
-                console.log(gc.print());
-                console.log(gc.gameScore);
-                // alert('Up was pressed');
-            }
-            else if (event.keyCode == 39) {
-                gc.moveRight();
-                console.log(gc.print());
-                console.log(gc.gameScore);
-                // alert('Right was pressed');
-            }
-            else if (event.keyCode == 40) {
-                gc.moveDown();
-                console.log(gc.print());
-                console.log(gc.gameScore);
-                // alert('Down was pressed');
-            } else if (event.keyCode == 78) {
-                gc = new GameController();
-                console.log(gc.print());
-                alert('N was pressed');
-            }
-        }, true);
-    </script>
+    <div class="container center">
+        <div class="heading">
+            <h1 class="title">2048</h1>
+            <div class="score">
+                <div class="score-container">0</div>
+            </div>
+        </div>
+        <div class="game-info">
+            <p class="instruction">Join the numbers and get to the <b>2048</b> tile!</p>
+            <a class="new-game">New Game</a>
+        </div>
+        <div class="game-container">
+            <div class="grid-container">
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+            </div>
+            <div class="tile-container"></div>
+        </div>
+    </div>
+    <script src="scripts/application.js"></script>
+    <script src="scripts/inputController.js"></script>
+    <script src="scripts/htmlModifier.js"></script>
     <script src="scripts/grid.js"></script>
     <script src="scripts/gameController.js"></script>
     <script src="scripts/tile.js"></script>
