@@ -13,6 +13,7 @@ function GameController(HtmlModifier, InputController) {
 GameController.prototype.newGame = function () {
     this.grid.cells = this.grid.emptyGrid();
     this.resetScore();
+    this.htmlModifier.resetGameMessage();
     this.htmlModifier.updateScore(this.gameScore);
     this.setup();
 }
@@ -220,7 +221,7 @@ GameController.prototype.checkGameFinished = function() {
             if (tile) {
                 tileCount++;
                 if (this.isWinningTile(tile)) {
-                    alert('Game won!')
+                    this.htmlModifier.gameWon();
                 }
                 if (this.isMatchingNeighbour(tile)) {
                     return;
@@ -230,7 +231,7 @@ GameController.prototype.checkGameFinished = function() {
     }
 
     if (tileCount === (this.grid.size ** 2)) {
-        alert('Game over!')
+        this.htmlModifier.gameOver();
     }
 }
 
