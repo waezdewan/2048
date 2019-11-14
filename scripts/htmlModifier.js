@@ -1,6 +1,7 @@
 function HtmlModifier() {
     this.tileContainer = document.querySelector(".tile-container");
     this.scoreContainer = document.querySelector(".score-container");
+    this.gameMessage = document.querySelector(".game-message");
 }
 
 HtmlModifier.prototype.modify = function (grid) {
@@ -54,4 +55,19 @@ HtmlModifier.prototype.positionLabel = function (position) {
 
 HtmlModifier.prototype.updateScore = function (value) {
     this.scoreContainer.textContent = value;
+}
+
+HtmlModifier.prototype.gameOver = function () {
+    this.gameMessage.textContent = "Game Over!";
+    this.gameMessage.setAttribute("class", "game-message game-over")
+}
+
+HtmlModifier.prototype.gameWon = function () {
+    this.gameMessage.textContent = "Game Won!";
+    this.gameMessage.setAttribute("class", "game-message game-won");
+}
+
+HtmlModifier.prototype.resetGameMessage = function () {
+    this.gameMessage.textContent = "";
+    this.gameMessage.setAttribute("class", "game-message");
 }
