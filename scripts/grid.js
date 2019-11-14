@@ -3,7 +3,7 @@ function Grid(size) {
     this.cells = this.emptyGrid();
 }
 
-Grid.prototype.emptyGrid = function() {
+Grid.prototype.emptyGrid = function () {
     let cells = [];
 
     for (let y = 0; y < this.size; y++) {
@@ -18,7 +18,7 @@ Grid.prototype.emptyGrid = function() {
     return cells;
 }
 
-Grid.prototype.randomAvailablePositions = function() {
+Grid.prototype.randomAvailablePositions = function () {
     let positions = this.availablePositions();
 
     if (positions.length) {
@@ -28,7 +28,7 @@ Grid.prototype.randomAvailablePositions = function() {
     }
 }
 
-Grid.prototype.availablePositions = function() {
+Grid.prototype.availablePositions = function () {
     let positions = [];
 
     for (let y = 0; y < this.size; y++) {
@@ -46,15 +46,15 @@ Grid.prototype.availablePositions = function() {
 }
 
 // forces return of true or false
-Grid.prototype.isCellAvailable = function() {
+Grid.prototype.isCellAvailable = function () {
     return !!this.availablePositions().length;
 }
 
 // insert tile into cell
-Grid.prototype.insertTile = function(tile) {
+Grid.prototype.insertTile = function (tile) {
     this.cells[tile.y][tile.x] = tile;
 }
 
-Grid.prototype.isCellEmpty = function(location) {
+Grid.prototype.isCellEmpty = function (location) {
     return !this.cells[location.y][location.x]
 }

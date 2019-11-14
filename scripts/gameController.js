@@ -22,29 +22,29 @@ GameController.prototype.resetScore = function () {
     this.gameScore = 0;
 }
 
-GameController.prototype.setup = function() {
+GameController.prototype.setup = function () {
     this.addStartTiles();
     this.htmlModifier.modify(this.grid);
 }
 
-GameController.prototype.addStartTiles = function() {
+GameController.prototype.addStartTiles = function () {
     for (let i = 0; i < this.numStartTiles; i++) {
         this.addRandomTile();
     }
 }
 
-GameController.prototype.addRandomTile = function() {
+GameController.prototype.addRandomTile = function () {
     if (this.grid.isCellAvailable) {
         let tile = new Tile(this.grid.randomAvailablePositions(), this.randomTileValue());
         this.grid.insertTile(tile);
     }
 }
 
-GameController.prototype.randomTileValue = function() {
+GameController.prototype.randomTileValue = function () {
     return Math.floor(Math.random() * 2 + 1) * 2;
 }
 
-GameController.prototype.moveUp = function() {
+GameController.prototype.moveUp = function () {
     let tilesMoved = false;
     for (let y = 1; y < this.grid.size; y++) {
         for (let x = 0; x < this.grid.size; x++) {
@@ -72,7 +72,7 @@ GameController.prototype.moveUp = function() {
     this.checkGrid(tilesMoved);
 }
 
-GameController.prototype.moveLeft = function() {
+GameController.prototype.moveLeft = function () {
     let tilesMoved = false;
     for (let y = 0; y < this.grid.size; y++) {
         for (let x = 1; x < this.grid.size; x++) {
@@ -100,7 +100,7 @@ GameController.prototype.moveLeft = function() {
     this.checkGrid(tilesMoved);
 }
 
-GameController.prototype.moveRight = function() {
+GameController.prototype.moveRight = function () {
     let tilesMoved = false;
     for (let y = 0; y < this.grid.size; y++) {
         for (let x = this.grid.size - 2; x >= 0; x--) {
@@ -128,7 +128,7 @@ GameController.prototype.moveRight = function() {
     this.checkGrid(tilesMoved);
 }
 
-GameController.prototype.moveDown = function() {
+GameController.prototype.moveDown = function () {
     let tilesMoved = false;
     for (let y = this.grid.size - 2; y >= 0; y--) {
         for (let x = 0; x < this.grid.size; x++) {
@@ -156,7 +156,7 @@ GameController.prototype.moveDown = function() {
     this.checkGrid(tilesMoved);
 }
 
-GameController.prototype.moveTile = function(tile, location) {
+GameController.prototype.moveTile = function (tile, location) {
     this.grid.cells[location.y][location.x] = tile;
     this.grid.cells[tile.y][tile.x] = null;
     tile.savePosition(tile.serialize().position);
@@ -164,7 +164,7 @@ GameController.prototype.moveTile = function(tile, location) {
 }
 
 // return true if tiles merge else false
-GameController.prototype.mergedTile = function(tile, location) {
+GameController.prototype.mergedTile = function (tile, location) {
     let targetTile = this.grid.cells[location.y][location.x];
     if (tile.value == targetTile.value && !targetTile.merged) {
         targetTile.value *= 2;
@@ -178,7 +178,7 @@ GameController.prototype.mergedTile = function(tile, location) {
     return false;
 }
 
-GameController.prototype.unsetMergeStatus = function() {
+GameController.prototype.unsetMergeStatus = function () {
     for (let y = 0; y < this.grid.size; y++) {
         for (let x = 0; x < this.grid.size; x++) {
             let tile = this.grid.cells[y][x];
@@ -189,7 +189,7 @@ GameController.prototype.unsetMergeStatus = function() {
     }
 }
 
-GameController.prototype.checkGrid = function(tilesMoved) {
+GameController.prototype.checkGrid = function (tilesMoved) {
     if (tilesMoved) {
         this.edgeCheckPreviousPosition();
         this.addRandomTile();
@@ -213,7 +213,7 @@ GameController.prototype.edgeCheckPreviousPosition = function () {
     }
 }
 
-GameController.prototype.checkGameFinished = function() {
+GameController.prototype.checkGameFinished = function () {
     let tileCount = 0;
     for (let y = 0; y < this.grid.size; y++) {
         for (let x = 0; x < this.grid.size; x++) {
@@ -235,12 +235,12 @@ GameController.prototype.checkGameFinished = function() {
     }
 }
 
-GameController.prototype.isWinningTile = function(tile) {
+GameController.prototype.isWinningTile = function (tile) {
     if (tile.value === this.winningTile ) return true;
     return false;
 }
 
-GameController.prototype.isMatchingNeighbour = function(tile) {
+GameController.prototype.isMatchingNeighbour = function (tile) {
     // left
     if (tile.x - 1 >= 0) {
         if (this.grid.cells[tile.y][tile.x - 1]) {
@@ -277,11 +277,11 @@ GameController.prototype.isMatchingNeighbour = function(tile) {
     return false;
 }
 
-GameController.prototype.updateScore = function(value) {
+GameController.prototype.updateScore = function (value) {
     this.gameScore += value;
 } 
 
-GameController.prototype.print = function() {
+GameController.prototype.print = function () {
     output = "";
     for (let y = 0; y < this.grid.size; y++) {
         for (let x = 0; x < this.grid.size; x++) {
